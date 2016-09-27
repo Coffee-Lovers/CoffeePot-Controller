@@ -3,7 +3,7 @@ version: '2'
 services:
     controller:
         volumes:
-            - ".:/var/www/html"
+            - ".:/var/www"
 
     toolbox:
         volumes_from:
