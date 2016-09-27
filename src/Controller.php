@@ -8,7 +8,7 @@
 
 namespace CL;
 
-
+use CLLibs\Messaging\Message;
 use CLLibs\Queue\Queue;
 use CLLibs\Messaging\Hub;
 use Psr\Log\LoggerInterface;
@@ -44,17 +44,13 @@ class Controller
     public function process()
     {
         $this->logger->info("Booting up processing");
-        $this->queue->consume('task_queue', [$this, 'consume']);
+        $that = $this;
+        $this->queue->consume('task_queue', function(string $serialized) use ($that) {
+            $task = unserialize($serialized);
+            $that->logger->info("New task received", ["task" => $task]);
+            sleep(5);
+            $that->logger->info("Processing task done");
+        });
     }
 
-    /**
-     * @param string $serialized
-     */
-    public function consume(string $serialized)
-    {
-        $this->logger->info("New task received", ["task" => $serialized]);
-        $task = unserialize($serialized);
-        sleep(5);
-        $this->logger->info("Processing task done");
-    }
 }
