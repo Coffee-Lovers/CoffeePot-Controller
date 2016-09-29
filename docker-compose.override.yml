@@ -6,7 +6,8 @@ services:
             - ".:/var/www"
 
     toolbox:
+        working_dir: "/var/www"
         volumes_from:
-            - "controller"
+           - "controller"
 
         image: "coffeelovers/php:7.0-toolbox"
