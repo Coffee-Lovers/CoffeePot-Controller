@@ -8,7 +8,7 @@
 
 namespace CL;
 
-use CLLibs\Messaging\Message;
+use CLLibs\Messaging\CoffeePotProgressMessage;
 use CLLibs\Queue\Queue;
 use CLLibs\Messaging\Hub;
 use Psr\Log\LoggerInterface;
@@ -41,6 +41,9 @@ class Controller
         $this->queue        = $queue;
     }
 
+    /**
+     * Process method.
+     */
     public function process()
     {
         $this->logger->info("Booting up processing");
@@ -48,7 +51,13 @@ class Controller
         $this->queue->consume('task_queue', function(string $serialized) use ($that) {
             $task = unserialize($serialized);
             $that->logger->info("New task received", ["task" => $task]);
+            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_BOILING_WATTER));
             sleep(5);
+            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_BREWING_COFFEE));
+            sleep(5);
+            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_ADDING_ADDITIONS));
+            sleep(5);
+            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_FINISHED));
             $that->logger->info("Processing task done");
         });
     }

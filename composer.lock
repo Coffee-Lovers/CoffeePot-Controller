@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Coffee-Lovers/Libs.git",
-                "reference": "b852b4593a9f861dbe1ae05d6d46226298f7e999"
+                "reference": "3523084106afc903714e132eb6d28e1df8fede37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Coffee-Lovers/Libs/zipball/b852b4593a9f861dbe1ae05d6d46226298f7e999",
-                "reference": "b852b4593a9f861dbe1ae05d6d46226298f7e999",
+                "url": "https://api.github.com/repos/Coffee-Lovers/Libs/zipball/3523084106afc903714e132eb6d28e1df8fede37",
+                "reference": "3523084106afc903714e132eb6d28e1df8fede37",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 "source": "https://github.com/Coffee-Lovers/Libs/tree/master",
                 "issues": "https://github.com/Coffee-Lovers/Libs/issues"
             },
-            "time": "2016-09-28 06:20:21"
+            "time": "2016-09-29 06:45:39"
         },
         {
             "name": "monolog/monolog",
