@@ -11,6 +11,7 @@ namespace CL;
 use CLLibs\Messaging\CoffeePotProgressMessage;
 use CLLibs\Queue\Queue;
 use CLLibs\Messaging\Hub;
+use CLLibs\Queue\Task;
 use Psr\Log\LoggerInterface;
 
 class Controller
@@ -49,7 +50,7 @@ class Controller
         $this->logger->info("Booting up processing");
         $that = $this;
         $this->queue->consume('task_queue', function(string $serialized) use ($that) {
-            $task = unserialize($serialized);
+            $task = Task::unserialize($serialized);
             $that->logger->info("New task received", ["task" => $task]);
             $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_BOILING_WATTER));
             sleep(5);
