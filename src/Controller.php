@@ -52,13 +52,13 @@ class Controller
         $this->queue->consume('task_queue', function(string $serialized) use ($that) {
             $task = Task::unserialize($serialized);
             $that->logger->info("New task received", ["task" => $task]);
-            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_BOILING_WATTER));
+            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_BOILING_WATTER, (new \DateTime())->getTimestamp()));
             sleep(5);
-            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_BREWING_COFFEE));
+            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_BREWING_COFFEE, (new \DateTime())->getTimestamp()));
             sleep(5);
-            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_ADDING_ADDITIONS));
+            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_ADDING_ADDITIONS, (new \DateTime())->getTimestamp()));
             sleep(5);
-            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_FINISHED));
+            $this->messagingHub->publish(new CoffeePotProgressMessage($task->getId(), CoffeePotProgressMessage::STAGE_FINISHED, (new \DateTime())->getTimestamp()));
             $that->logger->info("Processing task done");
         });
     }
